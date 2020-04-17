@@ -44,7 +44,7 @@ namespace Server
                     while (client.Connected == true)
                     {
                         GetMessage = sr.ReadLine();
-                        if (GetMessage != null) HandleMessage(GetMessage);
+                        if (!string.IsNullOrEmpty(GetMessage)) HandleMessage(GetMessage);
                         Thread.Sleep(100);
                     }
                 }
