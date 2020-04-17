@@ -19,7 +19,7 @@ namespace Server
             log.Info("서버를 가동합니다.");
 
             Handler r = new Handler(); // 핸들러
-            r.Listener(); // 리스너 실행
+            r.Listener().Wait(); // 리스너 실행
         }
     }
 }

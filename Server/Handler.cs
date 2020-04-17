@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Server
 {
@@ -25,7 +26,7 @@ namespace Server
         private StreamReader sr;
         private StreamWriter sw;
 
-        public void Listener()
+        async public Task Listener()
         {
             TcpListener listener = new TcpListener(IPAddress.Parse("127.0.0.1"), PORT);
             listener.Start();
@@ -33,7 +34,7 @@ namespace Server
             while (true)
             {
                 log.Info("연결을 대기하는 중입니다...");
-                client = listener.AcceptTcpClient(); // 클라이언트의 연결
+                client = await listener.AcceptTcpClientAsync(); // 클라이언트의 연결
                 Client.Add(client);
                 log.Info(Client);
 
