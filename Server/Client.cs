@@ -16,9 +16,15 @@ namespace Server
 
         public Client(TcpClient _client)
         {
-            this.client = _client;
-            this.ID = Guid.NewGuid().ToString();
-            this.EndPoint = (IPEndPoint)client.Client.RemoteEndPoint;
+            client = _client;
+            ID = Guid.NewGuid().ToString();
+            EndPoint = (IPEndPoint)client.Client.RemoteEndPoint;
+        }
+
+        public void Close()
+        {
+            client.Dispose();
+            client.Close();
         }
 
         public delegate void ClientDisconnectedHandler(Client client);
