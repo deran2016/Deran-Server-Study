@@ -22,28 +22,28 @@
 
         public User(int no, string ip, string id, string name, int level, int exp, int gold)
         {
-            this.No = no;
+            No = no;
 
-            this.Index = 1;
-            this.IP = ip;
+            Index = 1;
+            IP = ip;
 
-            this.ID = id;
-            this.Name = name;
+            ID = id;
+            Name = name;
 
-            this.Level = level;
-            this.Exp = exp;
-            this.MaxExp = 100;
-            this.Gold = gold;
+            Level = level;
+            Exp = exp;
+            MaxExp = 100;
+            Gold = gold;
 
-            this.HP = 100;
-            this.MaxHP = 100;
-            this.MP = 100;
-            this.MaxMP = 100;
+            HP = 100;
+            MaxHP = 100;
+            MP = 100;
+            MaxMP = 100;
 
-            this.Map = 1;
-            this.X = 0;
-            this.Y = 0;
-            this.Z = 0;
+            Map = 1;
+            X = 0;
+            Y = 0;
+            Z = 0;
         }
     }
 }

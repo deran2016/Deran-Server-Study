@@ -10,12 +10,12 @@ namespace Server
 {
     partial class Handler
     {
-        private NetworkStream NS = null;
-        private StreamReader SR = null;
-        private StreamWriter SW = null;
-        private TcpClient client;
+        private static readonly ILog log = LogManager.GetLogger(typeof(Handler)); // 로그
 
-        private static readonly ILog log = LogManager.GetLogger(typeof(Handler));
+        private NetworkStream NS = null; // 네트워크 스트림
+        private StreamReader SR = null; // 스트림 리더
+        private StreamWriter SW = null; // 스트림 라이터
+        private TcpClient client; // TCP 클라이언트
 
         public void StartClient(TcpClient clientSocket)
         {
