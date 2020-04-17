@@ -19,6 +19,8 @@ namespace Server
         public static Dictionary<int, User> User = new Dictionary<int, User>(); // 유저
         public static Dictionary<int, Client> Client = new Dictionary<int, Client>(); // 클라이언트 소켓 (필요할 지는 모르겠음...)
 
+        private NetworkStream ns;
+
         public void Listener()
         {
             bool done = false;
@@ -32,9 +34,8 @@ namespace Server
                 TcpClient client = listener.AcceptTcpClient(); // 클라이언트의 연결
 
                 log.Info("연결을 수락했습니다.");
-                NetworkStream ns = client.GetStream(); // 클라이언트의 스트림을 얻는다
+                ns = client.GetStream(); // 클라이언트의 스트림을 얻는다
                 StreamReader sr = new StreamReader(ns, Encoding.UTF8); // 스트림 읽기
-                StreamWriter sw = new StreamWriter(ns, Encoding.UTF8); // 스트림 쓰기
 
                 try
                 {
@@ -54,7 +55,6 @@ namespace Server
                 }
                 finally
                 {
-                    sw.Close();
                     sr.Close();
                     client.Close();
                     ns.Close();
@@ -74,7 +74,23 @@ namespace Server
 
         public void SendMessage(dynamic message)
         {
-            
+            if (ns != null && message != null)
+            {
+                StreamWriter sw = new StreamWriter(ns, Encoding.UTF8); // 스트림 쓰기
+                try
+                {
+                    sw.WriteLine(message); // 스트림에 메시지를 입력한다.
+                    sw.Flush(); // 스트림 청소
+                }
+                catch (Exception e)
+                {
+                    log.Error("에러 발생", e);
+                }
+                finally
+                {
+                    sw.Close();
+                }
+            }
         }
 
         // 연결되었을 때
