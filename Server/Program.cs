@@ -19,10 +19,7 @@ namespace Server
             log.Info("서버를 가동합니다.");
 
             Handler r = new Handler(); // 핸들러
-
-            Thread listener_thread = new Thread(r.Listener); // 리스너 쓰레드 생성
-            listener_thread.Start(); // 리스너 쓰레드 시작
-            log.Info("리스너 쓰레드를 시작합니다.");
+            r.Listener(); // 리스너 실행
         }
     }
 }
