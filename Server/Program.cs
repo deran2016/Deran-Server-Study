@@ -2,6 +2,7 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 [assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config", Watch = true)]
 
@@ -9,45 +10,19 @@ namespace Server
 {
     class Program
     {
-        // Log4net
-        private static readonly ILog log = LogManager.GetLogger(typeof(Program));
-
-        // PORT
-        private static readonly int PORT = 5050;
+        private static readonly ILog log = LogManager.GetLogger(typeof(Program)); // 로그
 
         static void Main(string[] args)
         {
-            Console.Title = "Server"; // Title
+            Console.Title = "Server"; // 콘솔 제목
 
-            TcpListener Listener = null; // TcpListener
-            TcpClient client = null; // TcpClient
+            log.Info("서버를 가동합니다.");
 
-            try
-            {
-                log.Info("서버 가동");
+            Handler r = new Handler(); // 핸들러
 
-                Handler r = new Handler();
-                log.Info("Handler 생성");
-
-                Listener = new TcpListener(IPAddress.Parse("127.0.0.1"), PORT);
-                Listener.Start();
-
-                while (true)
-                {
-                    log.Info("클라이언트 인식 루프 가동");
-                    client = Listener.AcceptTcpClient();
-                    log.Info("client 생성");
-                    r.StartClient(client);
-                }
-            }
-            catch (Exception e)
-            {
-                log.Error("Error occured", e);
-            }
-            finally
-            {
-
-            }
+            Thread listener_thread = new Thread(r.Listener); // 리스너 쓰레드 생성
+            listener_thread.Start(); // 리스너 쓰레드 시작
+            log.Info("리스너 쓰레드를 시작합니다.");
         }
     }
 }
